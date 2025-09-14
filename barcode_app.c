@@ -20,7 +20,7 @@ NotificationApp* notifications = 0;
 static bool select_file(const char* folder, FuriString* file_path) {
     DialogsApp* dialogs = furi_record_open(RECORD_DIALOGS);
     DialogsFileBrowserOptions browser_options;
-    dialog_file_browser_set_basic_options(&browser_options, "", &I_barcode_10);
+    dialog_file_browser_set_basic_options(&browser_options, "", NULL);
     browser_options.base_path = DEFAULT_USER_BARCODES;
     furi_string_set(file_path, folder);
 

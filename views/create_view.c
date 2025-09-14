@@ -162,6 +162,7 @@ void text_input_callback(void* ctx) {
         },
         true);
 
+                text_input_show_illegal_symbols(create_view_object->barcode_app->text_input, true);
     view_dispatcher_switch_to_view(
         create_view_object->barcode_app->view_dispatcher, CreateBarcodeView);
 }
@@ -230,12 +231,11 @@ static bool app_input_callback(InputEvent* input_event, void* ctx) {
                     create_view_object->input,
                     TEXT_BUFFER_SIZE - BARCODE_EXTENSION_LENGTH, //remove the barcode length
                     //clear default text
-                    false);
-                text_input_set_header_text(
+                    false);text_input_set_header_text(
                     create_view_object->barcode_app->text_input, "File Name");
-
-                view_dispatcher_switch_to_view(
-                    create_view_object->barcode_app->view_dispatcher, TextInputView);
+                text_input_show_illegal_symbols(create_view_object->barcode_app->text_input, false);
+                text_input_show_illegal_symbols(create_view_object->barcode_app->text_input, false);
+                view_dispatcher_switch_to_view(create_view_object->barcode_app->view_dispatcher, TextInputView);
             }
             if(selected_menu_item == BarcodeDataMenuItem && barcode_type != NULL) {
                 create_view_object->setter = BarcodeDataSetter;
@@ -253,12 +253,11 @@ static bool app_input_callback(InputEvent* input_event, void* ctx) {
                     create_view_object->input,
                     TEXT_BUFFER_SIZE,
                     //clear default text
-                    false);
-                text_input_set_header_text(
+                    false);text_input_set_header_text(
                     create_view_object->barcode_app->text_input, "Barcode Data");
-
-                view_dispatcher_switch_to_view(
-                    create_view_object->barcode_app->view_dispatcher, TextInputView);
+                text_input_show_illegal_symbols(create_view_object->barcode_app->text_input, true);
+                text_input_show_illegal_symbols(create_view_object->barcode_app->text_input, true);
+                view_dispatcher_switch_to_view(create_view_object->barcode_app->view_dispatcher, TextInputView);
             }
             if(selected_menu_item == SaveMenuButton && barcode_type != NULL) {
                 save_barcode(create_view_object);
