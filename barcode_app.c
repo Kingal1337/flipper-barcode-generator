@@ -422,10 +422,14 @@ int32_t barcode_main(void* p) {
         "EAN-8, EAN-13, Code-39,\n"
         "Codabar, Code-128, and QR\n"
         "\n"
-        "author: @Kingal1337\n"
+        "Original author:\n"
+        "@Kingal1337\n"
         "\n"
-        "For more information or\n"
-        "issues, go to\n"
+        "QR and keyboard revisions:\n"
+        "AzureSky\n"
+        "https://github.com/AzzureSkyy/barcode-generator-azuresky\n"
+        "\n"
+        "Original project:\n"
         "https://github.com/Kingal1337/flipper-barcode-generator");
     view_set_previous_callback(widget_get_view(app->about_widget), main_menu_callback);
     view_dispatcher_add_view(

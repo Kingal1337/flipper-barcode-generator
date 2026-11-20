@@ -81,7 +81,8 @@ The data keyboard only exposes characters supported by the selected format:
 
 ## Credits
 
-- [Kingal1337](https://github.com/Kingal1337) - Developer
+- [Kingal1337](https://github.com/Kingal1337) - Original developer
+- [AzureSky](https://github.com/AzzureSkyy/barcode-generator-azuresky) - QR Code support and keyboard revisions
 - [Z0wl](https://github.com/Z0wl) - Added Code128-C Support
 - [@teeebor](https://github.com/teeebor) - Menu Code Snippet
 - [thevan4](https://github.com/thevan4) - Added custom keyboard
