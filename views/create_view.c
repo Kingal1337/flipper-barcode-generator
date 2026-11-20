@@ -179,10 +179,13 @@ static const char* barcode_validation_message(BarcodeType type, ErrorCode reason
         case EAN13:
             return "EAN-13 needs 12 or 13\ndigits (hyphens OK).";
         case CODE128C:
-            return "Code 128C needs at least\none digit; odd counts pad.";
+            return "Code 128C needs at least\none digit; odd counts pad\nwith a leading zero.";
         case CODE39:
+            return "Code 39 needs a payload.\nOptional * guards are added\nautomatically.";
         case CODE128:
+            return "Code 128 needs at least\none printable ASCII\ncharacter.";
         case CODABAR:
+            return "Codabar needs a payload.\nA guards are added at\nboth ends automatically.";
         case UNKNOWN:
         default:
             return "Enter at least one\nbarcode character.";
@@ -197,11 +200,11 @@ static const char* barcode_validation_message(BarcodeType type, ErrorCode reason
         case CODE128C:
             return "This format accepts digits;\nhyphens/spaces are ignored.";
         case CODE39:
-            return "Code 39: A-Z, 0-9, space,\nand - . $ / + %";
+            return "Code 39: A-Z, 0-9, space,\nand - . $ / + %. * guards\nare optional and added.";
         case CODABAR:
-            return "Codabar: 0-9, - $ : / . +\nand optional A-D guards.";
+            return "Codabar: 0-9, - $ : / . +.\nA-D guards may surround\nthe payload; missing guards add.";
         case CODE128:
-            return "Code 128 supports printable\nASCII characters.";
+            return "Code 128 supports printable\nASCII characters (space\nthrough ~).";
         case UNKNOWN:
         default:
             break;

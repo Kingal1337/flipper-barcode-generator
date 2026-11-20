@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.8
+
+- Fix the validation message overlay passing an invalid null icon to the graphics API, which could make the input view appear frozen after an invalid entry
+- Expand format-specific hints for empty and invalid data, including Code 39 guards, Code 128 printable ASCII, Code 128C leading-zero padding, and Codabar automatic guards
+
 ## 1.7
 
 - Filter the data-entry keyboard by the selected barcode format so unsupported characters are no longer offered or accepted

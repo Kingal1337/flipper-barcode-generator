@@ -413,7 +413,7 @@ static void text_input_view_draw_callback(Canvas* canvas, void* _model) {
         canvas_set_color(canvas, ColorWhite);
         canvas_draw_box(canvas, 8, 10, 110, 48);
         canvas_set_color(canvas, ColorBlack);
-        canvas_draw_icon(canvas, 10, 14, NULL /* removed */);
+        canvas_draw_str(canvas, 13, 23, "!");
         canvas_draw_rframe(canvas, 8, 8, 112, 50, 3);
         canvas_draw_rframe(canvas, 9, 9, 110, 48, 2);
         elements_multiline_text(canvas, 62, 20, furi_string_get_cstr(model->validator_text));
