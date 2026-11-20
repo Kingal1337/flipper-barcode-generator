@@ -2,7 +2,7 @@
 	<h1 align="center">Barcode Generator</h1>  
   <p align="center">
 
-A barcode generator for the Flipper Zero that supports **UPC-A**, **EAN-8**, **EAN-13**, **Code-39**, **Codabar**, and **Code-128**[1]
+A barcode generator for the Flipper Zero that supports **UPC-A**, **EAN-8**, **EAN-13**, **Code-39**, **Codabar**, **Code-128**[1], and compact **QR Code** symbols.
 </p>
 
 Note: Barcode save locations have been moved from `/barcodes` to `/apps_data/barcodes`
@@ -52,6 +52,7 @@ The data keyboard only exposes characters supported by the selected format:
 - **Code 128 (Set B)**: printable ASCII characters.
 - **Code 128C**: digits. Grouping hyphens/spaces are ignored, and odd digit counts receive a leading zero so the data can be encoded in pairs.
 - **Codabar**: `0-9`, `- $ : / . +`, with optional `A-D` start/stop guards. If guards are omitted, the app adds `A` guards automatically (for example, `1234` becomes `A1234A`).
+- **QR Code**: printable ASCII. To remain readable on the 128x64 display, the app uses a version 1 symbol: up to 41 digits, 25 QR alphanumeric characters, or 17 general ASCII characters.
 
 ![Codabar Data Example](screenshots/Codabar%20Data%20Example.png "Codabar Data Example")
 
@@ -84,6 +85,7 @@ The data keyboard only exposes characters supported by the selected format:
 - [Z0wl](https://github.com/Z0wl) - Added Code128-C Support
 - [@teeebor](https://github.com/teeebor) - Menu Code Snippet
 - [thevan4](https://github.com/thevan4) - Added custom keyboard
+- [Project Nayuki](https://www.nayuki.io/page/qr-code-generator-library) - MIT-licensed QR Code generator library
 
 
 [1] - supports Set B (only the characters from 0-94). Also supports Set C

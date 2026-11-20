@@ -1,4 +1,5 @@
 #include "barcode_validator.h"
+#include "qrcodegen.h"
 
 void barcode_loader(BarcodeData* barcode_data) {
     switch(barcode_data->type_obj->type) {
@@ -18,6 +19,9 @@ void barcode_loader(BarcodeData* barcode_data) {
         break;
     case CODABAR:
         codabar_loader(barcode_data);
+        break;
+    case QRCODE:
+        qr_code_loader(barcode_data);
         break;
     case UNKNOWN:
         barcode_data->reason = UnsupportedType;
@@ -44,6 +48,7 @@ int calculate_check_digit(BarcodeData* barcode_data) {
     case CODE128:
     case CODE128C:
     case CODABAR:
+    case QRCODE:
     case UNKNOWN:
     default:
         break;
@@ -505,6 +510,40 @@ void code_128c_loader(BarcodeData* barcode_data) {
     FURI_LOG_I(TAG, "c128c %s", furi_string_get_cstr(barcode_bits));
     furi_string_cat(barcode_data->correct_data, barcode_bits);
     furi_string_free(barcode_bits);
+}
+
+void qr_code_loader(BarcodeData* barcode_data) {
+    const char* text = furi_string_get_cstr(barcode_data->raw_data);
+    size_t text_length = furi_string_size(barcode_data->raw_data);
+    if(text_length == 0) {
+        barcode_data->reason = WrongNumberOfDigits;
+        barcode_data->valid = false;
+        return;
+    }
+
+    for(size_t i = 0; i < text_length; i++) {
+        unsigned char character = (unsigned char)text[i];
+        if(character < 32 || character > 126) {
+            barcode_data->reason = InvalidCharacters;
+            barcode_data->valid = false;
+            return;
+        }
+    }
+
+    uint8_t temp_buffer[qrcodegen_BUFFER_LEN_FOR_VERSION(1)];
+    uint8_t qr_code[qrcodegen_BUFFER_LEN_FOR_VERSION(1)];
+    if(!qrcodegen_encodeText(
+           text,
+           temp_buffer,
+           qr_code,
+           qrcodegen_Ecc_LOW,
+           1,
+           1,
+           qrcodegen_Mask_AUTO,
+           false)) {
+        barcode_data->reason = WrongNumberOfDigits;
+        barcode_data->valid = false;
+    }
 }
 
 void codabar_loader(BarcodeData* barcode_data) {

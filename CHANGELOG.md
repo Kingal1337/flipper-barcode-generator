@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0
+
+- Add compact version 1 QR Code creation, validation, save/load, and display support with printable-ASCII keyboard input and capacity-specific hints
+- Keep restricted keyboards focused only on visible keys so numeric formats no longer appear frozen when selection lands on a hidden letter
+- Fix a one-byte text drawing buffer overflow and allow Back to leave while a validation hint is visible
+
 ## 1.8
 
 - Fix the validation message overlay passing an invalid null icon to the graphics API, which could make the input view appear frozen after an invalid entry
