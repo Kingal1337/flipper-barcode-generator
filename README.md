@@ -29,7 +29,7 @@ Note: Barcode save locations have been moved from `/barcodes` to `/apps_data/bar
 6) Navigate back to the root folder of the SD card and create the folder `apps_data`, if not already there
 7) Navigate into `apps_data` and create another folder called `barcode_data`
 8) Navigate into `barcode_data`
-9) Drag & drop the encoding txts (`code39_encodings.txt`, `code128_encodings.txt` & `codabar_encodings.txt`) into the `barcode_data` folder
+9) Drag & drop all four encoding files (`code39_encodings.txt`, `code128_encodings.txt`, `code128c_encodings.txt`, and `codabar_encodings.txt`) into the `barcode_data` folder
 
 ## Building
 1) Clone the [flipperzero-firmware](https://github.com/flipperdevices/flipperzero-firmware) repository or a firmware of your choice
@@ -45,9 +45,13 @@ Note: Barcode save locations have been moved from `/barcodes` to `/apps_data/bar
 3) Enter your filename and then your barcode data
 4) Click save
 
-**Note**: For Codabar barcodes, you must manually add the start and stop codes to the barcode data
-Start/Stop codes can be A, B, C, or D
-For example, if you wanted to represent `1234` as a barcode you will need to enter something like `A1234A`. (You can replace the letters A with either A, B, C, or D)
+The data keyboard only exposes characters supported by the selected format:
+
+- **UPC-A**: 11 or 12 digits; **EAN-8**: 7 or 8 digits; **EAN-13**: 12 or 13 digits. The shorter form receives a calculated check digit. Grouping hyphens and spaces are ignored.
+- **Code 39**: `A-Z`, `0-9`, space, `- . $ / + %`. Outer `*` guards are optional and added automatically.
+- **Code 128 (Set B)**: printable ASCII characters.
+- **Code 128C**: digits. Grouping hyphens/spaces are ignored, and odd digit counts receive a leading zero so the data can be encoded in pairs.
+- **Codabar**: `0-9`, `- $ : / . +`, with optional `A-D` start/stop guards. If guards are omitted, the app adds `A` guards automatically (for example, `1234` becomes `A1234A`).
 
 ![Codabar Data Example](screenshots/Codabar%20Data%20Example.png "Codabar Data Example")
 

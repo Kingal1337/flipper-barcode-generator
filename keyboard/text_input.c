@@ -46,6 +46,7 @@ typedef struct {
     bool validator_message_visible;
 
     bool illegal_symbols;
+    const char* allowed_characters;
     bool cursor_select;
     uint8_t selected_keyboard;
     size_t cursor_pos;
@@ -275,6 +276,11 @@ static char char_to_illegal_symbol(char original) {
     }
 }
 
+static bool text_input_char_allowed(const TextInputModel* model, char character) {
+    return model->allowed_characters == NULL ||
+           strchr(model->allowed_characters, character) != NULL;
+}
+
 static void text_input_backspace_cb(TextInputModel* model) {
     if(model->clear_default_text) {
         model->text_buffer[0] = 0;
@@ -367,6 +373,13 @@ static void text_input_view_draw_callback(Canvas* canvas, void* _model) {
                     keyboard_origin_y + keys[column].y,
                     icon);
             } else {
+                char glyph = keys[column].text;
+                char mapped_glyph =
+                    (symbols && model->illegal_symbols) ? char_to_illegal_symbol(glyph) : glyph;
+                bool allowed = text_input_char_allowed(model, mapped_glyph) ||
+                               (!symbols && text_input_char_allowed(model, char_to_uppercase(glyph)));
+                if(!allowed) continue;
+
                 if(selected) {
                     elements_slightly_rounded_box(
                         canvas,
@@ -377,7 +390,6 @@ static void text_input_view_draw_callback(Canvas* canvas, void* _model) {
                     canvas_set_color(canvas, ColorWhite);
                 }
 
-                char glyph = keys[column].text;
                 if(uppercase && !symbols) {
                     canvas_draw_glyph(
                         canvas,
@@ -518,6 +530,14 @@ static void text_input_handle_ok(TextInput* text_input, TextInputModel* model, I
                    model->illegal_symbols) {
                     selected = char_to_illegal_symbol(selected);
                 }
+                if(selected == '_' && text_input_char_allowed(model, ' ') &&
+                   !text_input_char_allowed(model, '_')) {
+                    selected = ' ';
+                }
+                if(!text_input_char_allowed(model, selected)) {
+                    model->clear_default_text = false;
+                    return;
+                }
                 if(model->clear_default_text) {
                     model->text_buffer[0] = selected;
                     model->text_buffer[1] = '\0';
@@ -655,6 +675,7 @@ TextInput* text_input_alloc(void) {
             model->validator_text = furi_string_alloc();
             model->minimum_length = 1;
             model->illegal_symbols = false;
+            model->allowed_characters = NULL;
             model->cursor_pos = 0;
             model->cursor_select = false;
         },
@@ -695,6 +716,7 @@ void text_input_reset(TextInput* text_input) {
             model->selected_keyboard = 0;
             model->minimum_length = 1;
             model->illegal_symbols = false;
+            model->allowed_characters = NULL;
             model->clear_default_text = false;
             model->cursor_pos = 0;
             model->cursor_select = false;
@@ -761,6 +783,15 @@ void text_input_show_illegal_symbols(TextInput* text_input, bool show) {
         text_input->view, TextInputModel * model, { model->illegal_symbols = show; }, true);
 }
 
+void text_input_set_allowed_characters(TextInput* text_input, const char* allowed_characters) {
+    furi_check(text_input);
+    with_view_model(
+        text_input->view,
+        TextInputModel * model,
+        { model->allowed_characters = allowed_characters; },
+        true);
+}
+
 void text_input_set_validator(
     TextInput* text_input,
     TextInputValidatorCallback callback,
@@ -804,7 +835,6 @@ void text_input_set_header_text(TextInput* text_input, const char* text) {
 }
 
 #endif
-
 
 void text_input_force_page(TextInput* text_input, bool symbols) {
     furi_check(text_input);

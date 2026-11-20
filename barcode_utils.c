@@ -46,7 +46,7 @@ void init_types() {
     BarcodeTypeObj* code_128c = malloc(sizeof(BarcodeTypeObj));
     code_128c->name = "CODE-128C";
     code_128c->type = CODE128C;
-    code_128c->min_digits = 2;
+    code_128c->min_digits = 1;
     code_128c->max_digits = -1;
     code_128c->start_pos = 0;
     barcode_type_objs[CODE128C] = code_128c;
