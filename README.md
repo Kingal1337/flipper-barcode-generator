@@ -78,6 +78,8 @@ Select `Load Barcode`, then choose a saved entry.
 
 ![Flipper Box EAN-13 Barcode](screenshots/Flipper%20Box%20Barcode.png "Flipper Box EAN-13 Barcode")
 
+![Flipper QR Code](screenshots/Flipper%20QR%20Code.png "Flipper QR Code")
+
 ## Credits
 
 - [Kingal1337](https://github.com/Kingal1337) - Original developer
