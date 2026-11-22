@@ -10,7 +10,7 @@ App(
     fap_icon_assets="images",
     fap_file_assets="barcode_encoding_files",
     fap_author="@Kingal1337, AzureSky",
-    fap_weburl="https://github.com/AzzureSkyy/barcode-generator-azuresky",
+    fap_weburl="https://github.com/Kingal1337/flipper-barcode-generator",
     fap_version="2.0",
     fap_description="App allows you to display various barcodes on flipper screen",
 )
